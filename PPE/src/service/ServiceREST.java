@@ -1,6 +1,10 @@
 package service;
 
+import java.io.IOException;
+import java.nio.channels.Channel;
+import java.sql.Connection;
 import java.util.Date;
+import java.util.concurrent.TimeoutException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -10,6 +14,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+
 import modele.Utilisateur;
 import ressources.FournisseurDePersistance;
 import ressources.MessageDTO;
@@ -17,7 +25,7 @@ import ressources.MessageDTO;
 @Path("dto")
 public class ServiceREST {
 	
-	//private final static String QUEUE_NAME = "journal";
+	private final static String QUEUE_NAME = "journal";
 	private String messageJournal;
 	private String nomprenom;
 	private String role;
@@ -53,6 +61,7 @@ public class ServiceREST {
 				}
 				else {
 						nomprenom = utilisateur.getNom() + " " + utilisateur.getPrenom();
+						role=utilisateur.getRole().getRole();
 						messageJournal = email + " accès " + new Date();
 						statut = true;
 				}
@@ -72,6 +81,7 @@ public class ServiceREST {
 		return statut;
 	}
 	/*
+	
 	private void journaliser() throws IOException, TimeoutException {
 		ConnectionFactory factory = new ConnectionFactory();
 	    factory.setHost("rabbitmq");
@@ -82,5 +92,6 @@ public class ServiceREST {
 	    System.out.println(" [x] Envoyé '" + messageJournal + "'");
 	    channel.close();
 	    connexion.close();
-	}*/
+	}
+	*/
 }

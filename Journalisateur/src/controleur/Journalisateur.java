@@ -66,7 +66,6 @@ public class Journalisateur extends HttpServlet {
 	          journaliser();
 	        }
 	      };
-	      System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 	      channel.basicConsume(QUEUE_NAME, true, consumer);
 	}
 	
@@ -78,7 +77,6 @@ public class Journalisateur extends HttpServlet {
 		Journal journal = new Journal();
 		journal.setEmail(donneesMembres[0]);
 		journal.setUtilisateur(donneesMembres[1]);
-		System.out.println("STATU " + donneesMembres[2]);
 		journal.setStatut(donneesMembres[2]);
 		journal.setDateacces(new Date());		
 		em.persist(journal);
